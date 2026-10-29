@@ -19,7 +19,7 @@ Go uses a versioned module tag. Pin versions and test upgrades.
 <Tabs>
 <Tab title="JavaScript / TypeScript">
 ```bash
-npm install moonemail@0.1.0
+npm install moonemail@0.1.1
 ```
 
 ```typescript
@@ -38,7 +38,7 @@ Node.js 22+. [TypeScript usage and errors](https://github.com/halyard-labs/moone
 </Tab>
 <Tab title="Python">
 ```bash
-pip install https://github.com/halyard-labs/moonemail-sdks/releases/download/v0.1.0/moonemail-0.1.0-py3-none-any.whl
+pip install https://github.com/halyard-labs/moonemail-sdks/releases/download/v0.1.1/moonemail-0.1.1-py3-none-any.whl
 ```
 
 ```python
@@ -58,7 +58,7 @@ Python 3.10+. [Python usage and errors](https://github.com/halyard-labs/moonemai
 </Tab>
 <Tab title="Go">
 ```bash
-go get github.com/halyard-labs/moonemail-sdks/go@v0.1.0
+go get github.com/halyard-labs/moonemail-sdks/go@v0.1.1
 ```
 
 ```go
@@ -76,7 +76,8 @@ These clients do not add unsupported features such as campaigns or SMTP.
 
 ## Versions and updates
 
-SDK releases track the deployed API contract version. The release workflow
+New API contract versions trigger SDK releases. SDK fixes can also ship as patch
+releases, so the SDK and API version numbers may differ. The release workflow
 regenerates and tests all three clients before publishing. See
 [release notes](https://github.com/halyard-labs/moonemail-sdks/releases) for changes
 and [the public contract](https://github.com/halyard-labs/moonemail-sdks/blob/main/spec/openapi.json)
