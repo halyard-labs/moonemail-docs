@@ -12,7 +12,7 @@ A batch can partially dispatch if infrastructure fails after validation. Investi
 
 ## Scheduling
 
-Set `scheduled_at` to an ISO timestamp or a supported relative expression such as `in 1 hour`, up to 30 days ahead. Only scheduled messages can be rescheduled or cancelled. Once dispatch has begun, cancellation is not a recall mechanism.
+Set `scheduled_at` to an ISO timestamp or a supported relative expression such as `in 1 hour`, with at least one day remaining before the message’s original retention deadline (less than 29 days from acceptance with the current 30-day retention). Rescheduling never extends that deadline. Only scheduled messages can be rescheduled or cancelled. Once dispatch has begun, cancellation is not a recall mechanism.
 
 ## Delivery status
 
