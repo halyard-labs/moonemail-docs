@@ -11,14 +11,15 @@ The SDKs are MIT licensed and generated from the same public OpenAPI contract as
 this reference. Dashboard billing and OAuth consent are not API-key operations.
 
 <Note>
-Initial packages are available through GitHub Releases. npm and PyPI registry
-publication is not enabled yet. Use the release links below.
+JavaScript/TypeScript is available on [npm](https://www.npmjs.com/package/moonemail).
+Python is available as a GitHub Release wheel while PyPI setup is completed.
+Go uses a versioned module tag. Pin versions and test upgrades.
 </Note>
 
 <Tabs>
 <Tab title="JavaScript / TypeScript">
 ```bash
-npm install https://github.com/halyard-labs/moonemail-sdks/releases/download/v0.1.0/moonemail-0.1.0.tgz
+npm install moonemail@0.1.0
 ```
 
 ```typescript
@@ -72,3 +73,12 @@ Go 1.23+. [Complete Go example](https://github.com/halyard-labs/moonemail-sdks/t
 Keep keys on your server. Clients do not automatically retry sends; reuse the
 same idempotency key and payload when retrying, and respect rate-limit responses.
 These clients do not add unsupported features such as campaigns or SMTP.
+
+## Versions and updates
+
+SDK releases track the deployed API contract version. The release workflow
+regenerates and tests all three clients before publishing. See
+[release notes](https://github.com/halyard-labs/moonemail-sdks/releases) for changes
+and [the public contract](https://github.com/halyard-labs/moonemail-sdks/blob/main/spec/openapi.json)
+for the schemas behind the clients. Your installed package stays pinned until you
+choose to upgrade.
