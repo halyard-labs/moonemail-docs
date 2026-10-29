@@ -1,0 +1,19 @@
+---
+title: "Errors and pagination"
+description: "Handle failures and iterate through results safely."
+---
+Product API errors use this shape:
+
+```json
+{ "statusCode": 422, "name": "validation_error", "message": "Check the request fields." }
+```
+
+Treat the HTTP status as authoritative. Validation and permission errors need a change to the request or configuration. Retry transient failures with exponential backoff and jitter, preserving the same idempotency key for writes that support it. On a timeout, do not assume that a send failed.
+
+Rate limits and sending quotas are separate controls. A successful subscription does not remove operational or abuse limits. Inspect the response's error message before retrying a quota rejection.
+
+## Lists
+
+Most list responses contain `object: "list"`, `has_more` and `data`. Where supported, pass `limit` (1–100) and use the last returned ID as the next `after` cursor.
+
+Outbound email lists accept either `after` or `before`, never both. Inbox and received-email lists accept `after` only. Some lists are not paginated; check the endpoint's query parameters instead of assuming cursors are supported everywhere.

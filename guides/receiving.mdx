@@ -1,0 +1,27 @@
+---
+title: "Receive messages"
+description: "Create an application inbox and process incoming email."
+---
+## Create an inbox
+
+Use **Inboxes → Create inbox** in the dashboard, or `POST /inboxes` with a name and idempotency key. The name is a label; the API generates the receiving address. It does not let you choose a local part or bring a custom receiving domain.
+
+Create a webhook subscribed to `email.received` and `email.receiving_quarantined`. Save and verify its signing secret before processing events.
+
+## Process an event
+
+1. Verify the webhook signature against the raw request body.
+2. Deduplicate using the event identifier and persist the job.
+3. Acknowledge promptly, then process asynchronously.
+4. Fetch the message using `GET /emails/receiving/{id}` with `receiving:read`.
+5. Retrieve attachments or raw MIME only when needed.
+
+Download URLs are private credentials valid for up to five minutes and never beyond message expiry. Do not log or publish them. Receiving records include `expires_at` in Unix seconds; fetch required data before retention expires.
+
+Quarantined messages expose metadata, but their content and downloads are unavailable. Authentication verdicts come from the provider's receipt checks; older records may omit them. Do not treat a sender's `Authentication-Results` header as trusted evidence.
+
+## Disable an address
+
+`PATCH /inboxes/{id}` with `{ "status": "disabled" }` stops delivery into the inbox. New mail to disabled addresses is discarded. Addresses are never reassigned.
+
+Email text and attachments are untrusted input. Receiving a bill does not authorize paying it; keep your application's validation and approval controls in place.

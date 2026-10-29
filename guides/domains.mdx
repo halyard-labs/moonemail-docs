@@ -1,0 +1,24 @@
+---
+title: "Domains and health"
+description: "Verify senders and read delivery reputation signals."
+---
+Add a domain using the dashboard or `POST /domains`. Publish the returned DNS records with your DNS provider, then request verification using `POST /domains/{id}/verify`. Adding a domain through the API does not change DNS automatically.
+
+Use the exact records returned for your domain. Keep verification and mail-related records DNS-only if your provider offers a web proxy. Do not replace existing human-mailbox MX records.
+
+The domain's receiving capability remains disabled: platform inboxes are created separately through `POST /inboxes`.
+
+## Domain health
+
+`GET /domains/{id}/health` returns sending status and bounce/complaint samples. Rates are fractions: `0.01` means 1%.
+
+- `below_threshold`: the latest fresh sample is below the review threshold.
+- `review`: the latest fresh sample reaches the review threshold.
+- `stale`: the latest sample is more than 24 hours old.
+- `no_data` or `unavailable`: there is no usable current measurement.
+
+Missing data is not a zero rate. These are lagging signals, not predictions of deliverability. Health display does not automatically suspend sending. Check `sending_enabled` and `sending_suspended` separately.
+
+## Starting a new sender
+
+Begin with small volumes of expected transactional messages to engaged recipients. Avoid sudden spikes, purchased lists and sending again to bounced or complaining addresses. Domain verification alone does not establish a sending reputation.

@@ -1,0 +1,178 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Moonemail",
+  "colors": {
+    "primary": "#24624c",
+    "light": "#4d9977",
+    "dark": "#24624c"
+  },
+  "appearance": {
+    "default": "system"
+  },
+  "background": {
+    "color": {
+      "light": "#fbfcfb",
+      "dark": "#111b16"
+    }
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Support",
+        "href": "mailto:support@moonemail.co"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Open dashboard",
+      "href": "https://app.moonemail.co"
+    }
+  },
+  "api": {
+    "playground": {
+      "display": "simple",
+      "proxy": false
+    },
+    "examples": {
+      "languages": [
+        "bash",
+        "javascript",
+        "python"
+      ]
+    }
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Guides",
+        "groups": [
+          {
+            "group": "Get started",
+            "pages": [
+              "index",
+              "quickstart",
+              "authentication",
+              "sdks"
+            ]
+          },
+          {
+            "group": "Build your integration",
+            "pages": [
+              "guides/sending",
+              "guides/domains",
+              "guides/receiving",
+              "guides/webhooks",
+              "guides/errors",
+              "guides/agents"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API reference",
+        "groups": [
+          {
+            "group": "Emails",
+            "openapi": "openapi.json",
+            "pages": [
+              "POST /emails",
+              "POST /emails/batch",
+              "GET /emails",
+              "GET /emails/{id}",
+              "PATCH /emails/{id}",
+              "POST /emails/{id}/cancel",
+              "GET /emails/{id}/events"
+            ]
+          },
+          {
+            "group": "Domains",
+            "openapi": "openapi.json",
+            "pages": [
+              "POST /domains",
+              "GET /domains",
+              "GET /domains/{id}",
+              "GET /domains/{id}/health",
+              "PATCH /domains/{id}",
+              "POST /domains/{id}/verify",
+              "DELETE /domains/{id}"
+            ]
+          },
+          {
+            "group": "Inboxes",
+            "openapi": "openapi.json",
+            "pages": [
+              "POST /inboxes",
+              "GET /inboxes",
+              "GET /inboxes/{id}",
+              "PATCH /inboxes/{id}"
+            ]
+          },
+          {
+            "group": "Receiving",
+            "openapi": "openapi.json",
+            "pages": [
+              "GET /emails/receiving",
+              "GET /emails/receiving/{id}",
+              "GET /emails/receiving/{id}/attachments",
+              "GET /emails/receiving/{id}/attachments/{attachment_id}",
+              "GET /emails/receiving/{id}/raw"
+            ]
+          },
+          {
+            "group": "Webhooks",
+            "openapi": "openapi.json",
+            "pages": [
+              "POST /webhooks",
+              "GET /webhooks",
+              "GET /webhooks/{id}",
+              "PATCH /webhooks/{id}",
+              "DELETE /webhooks/{id}",
+              "GET /webhooks/{id}/deliveries"
+            ]
+          },
+          {
+            "group": "Suppressions",
+            "openapi": "openapi.json",
+            "pages": [
+              "GET /suppressions",
+              "POST /suppressions",
+              "DELETE /suppressions/{email}"
+            ]
+          },
+          {
+            "group": "API keys",
+            "openapi": "openapi.json",
+            "pages": [
+              "GET /permissions",
+              "POST /api-keys",
+              "GET /api-keys",
+              "DELETE /api-keys/{id}"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "footer": {
+    "links": [
+      {
+        "header": "Moonemail",
+        "items": [
+          {
+            "label": "Website",
+            "href": "https://moonemail.co"
+          },
+          {
+            "label": "Privacy",
+            "href": "https://moonemail.co/privacy"
+          },
+          {
+            "label": "Terms",
+            "href": "https://moonemail.co/terms"
+          }
+        ]
+      }
+    ]
+  }
+}

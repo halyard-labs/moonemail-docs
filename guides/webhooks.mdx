@@ -1,0 +1,31 @@
+---
+title: "Webhook events"
+description: "Receive delivery and inbound events in your application."
+---
+Create an HTTPS destination in the dashboard or through `POST /webhooks`. Choose only the event types your application needs. The API returns a signing secret on creation; save it in your secret store.
+
+## Verify before processing
+
+Moonemail uses Standard Webhooks/Svix-style signing. Verify `svix-id`, `svix-timestamp` and `svix-signature` against the **raw request body** and your endpoint's secret. Use a compatible verifier and enforce timestamp freshness. Parsing and re-serializing JSON before verification changes the signed bytes.
+
+Persist accepted work, return a successful HTTP response promptly, and process it asynchronously. Deduplicate by `svix-id`: deliveries can be retried, and the same event must not produce duplicate effects.
+
+## Events to start with
+
+| Event | Meaning |
+| --- | --- |
+| `email.sent` | Accepted by the sending provider |
+| `email.delivered` | Accepted by the recipient server |
+| `email.delivery_delayed` | Delivery is delayed |
+| `email.bounced` | Delivery bounced |
+| `email.complained` | A complaint was reported |
+| `email.failed` | Dispatch failed |
+| `email.suppressed` | Recipient sending was blocked |
+| `email.received` | An inbound message is available |
+| `email.receiving_quarantined` | Inbound metadata is available but content is withheld |
+
+Scheduled/cancelled and optional open/click events are also supported; the create-webhook reference lists all accepted event types.
+
+Use `GET /webhooks/{id}/deliveries` to inspect recent attempts, status codes and errors. A status code of zero means no HTTP response was received.
+
+Hard bounces and complaints populate the project's suppression list. Do not remove a suppression simply to retry an unwanted or undeliverable message.

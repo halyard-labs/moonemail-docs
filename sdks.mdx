@@ -1,0 +1,74 @@
+---
+title: 'SDKs'
+description: 'Open-source JavaScript, TypeScript, Python and Go clients generated from the Moonemail API contract.'
+---
+
+Use the [official SDK repository](https://github.com/halyard-labs/moonemail-sdks)
+for server-side integrations. All three clients cover sending, receiving,
+inboxes, domains and health, webhooks, suppressions, API keys and permissions.
+
+The SDKs are MIT licensed and generated from the same public OpenAPI contract as
+this reference. Dashboard billing and OAuth consent are not API-key operations.
+
+<Note>
+Initial packages are available through GitHub Releases. npm and PyPI registry
+publication is not enabled yet. Use the release links below.
+</Note>
+
+<Tabs>
+<Tab title="JavaScript / TypeScript">
+```bash
+npm install https://github.com/halyard-labs/moonemail-sdks/releases/download/v0.1.0/moonemail-0.1.0.tgz
+```
+
+```typescript
+import { Moonemail } from 'moonemail';
+
+const email = new Moonemail(process.env.MOONEMAIL_API_KEY!);
+const sent = await email.emails.send({
+  from: 'Acme <hello@your-verified-domain.com>',
+  to: ['recipient@example.com'],
+  subject: 'Your receipt',
+  text: 'Thanks for your order.',
+}, { idempotencyKey: 'order-123-receipt' });
+```
+
+Node.js 22+. [TypeScript usage and errors](https://github.com/halyard-labs/moonemail-sdks/tree/main/typescript).
+</Tab>
+<Tab title="Python">
+```bash
+pip install https://github.com/halyard-labs/moonemail-sdks/releases/download/v0.1.0/moonemail-0.1.0-py3-none-any.whl
+```
+
+```python
+import os
+from moonemail import Moonemail
+
+with Moonemail(os.environ['MOONEMAIL_API_KEY']) as email:
+    sent = email.emails.send({
+        'from': 'Acme <hello@your-verified-domain.com>',
+        'to': ['recipient@example.com'],
+        'subject': 'Your receipt',
+        'text': 'Thanks for your order.',
+    }, idempotency_key='order-123-receipt')
+```
+
+Python 3.10+. [Python usage and errors](https://github.com/halyard-labs/moonemail-sdks/tree/main/python).
+</Tab>
+<Tab title="Go">
+```bash
+go get github.com/halyard-labs/moonemail-sdks/go@v0.1.0
+```
+
+```go
+email, err := moonemail.New(os.Getenv("MOONEMAIL_API_KEY"))
+if err != nil { return err }
+```
+
+Go 1.23+. [Complete Go example](https://github.com/halyard-labs/moonemail-sdks/tree/main/go).
+</Tab>
+</Tabs>
+
+Keep keys on your server. Clients do not automatically retry sends; reuse the
+same idempotency key and payload when retrying, and respect rate-limit responses.
+These clients do not add unsupported features such as campaigns or SMTP.

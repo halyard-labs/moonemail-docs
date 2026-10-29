@@ -1,0 +1,29 @@
+---
+title: "Sending and retries"
+description: "Send, schedule and track transactional messages."
+---
+Use `POST /emails` to send one message, or `POST /emails/batch` for up to 100 messages. Batch requests do not support attachments. The API reference lists the supported fields and limits.
+
+## Idempotency
+
+Use an `Idempotency-Key` header for sends and inbox creation. Store the key with your application job so retries reuse it with the same payload. Keys are retained for 24 hours. Do not use one key for different messages or generate a fresh key after an ambiguous timeout.
+
+A batch can partially dispatch if infrastructure fails after validation. Investigate its outcome before issuing a new batch with a different key.
+
+## Scheduling
+
+Set `scheduled_at` to an ISO timestamp or a supported relative expression such as `in 1 hour`, up to 30 days ahead. Only scheduled messages can be rescheduled or cancelled. Once dispatch has begun, cancellation is not a recall mechanism.
+
+## Delivery status
+
+An accepted send returns `{ "id": "…" }`. Read the message or its events to track progress. Webhooks provide delivery notifications without polling.
+
+A delivered event means the receiving server accepted the message. It does not prove inbox placement or that someone read it. Open and click tracking can be affected by privacy features and automated scanners.
+
+## Usage
+
+Each recipient counts as one send, including CC and BCC recipients. A provider-accepted send still counts if it later bounces. Billing details and account limits are shown in [Billing](https://app.moonemail.co/billing).
+
+## Migrating a Resend integration
+
+Moonemail supports Resend-style shapes for its implemented transactional endpoints. Test your particular SDK version with the Moonemail base URL and a scoped key before cutover. This is not full Resend product parity: hosted templates, campaigns and SMTP are not supported.

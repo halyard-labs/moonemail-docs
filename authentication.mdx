@@ -1,0 +1,27 @@
+---
+title: "Authentication and permissions"
+description: "Give each integration only the access it needs."
+---
+Send `Authorization: Bearer <API_KEY>` with API requests. Never put keys in frontend code, URLs or logs.
+
+| Key type | Access |
+| --- | --- |
+| Sending access | Send email, optionally restricted to one verified domain |
+| Custom scopes | Explicit read, write or delete permissions for the integration |
+| Full access | Operational access and API-key administration |
+
+Use a sending key for a mailer. Use a separate custom-scoped key for provisioning or event inspection. All valid keys can call `GET /permissions` to inspect their access and expiry.
+
+## Scope boundaries
+
+Read, write and delete are separate grants. For example, `domains:write` does not grant `domains:read` or `domains:delete`. Each reference endpoint lists its required permission.
+
+Operational scopes apply to the current project's resources. A domain restriction is supported only on send-only keys. Custom-scoped keys cannot create other keys, manage account settings or purchase subscriptions.
+
+An account may manage multiple projects. Create the credential inside the project it should access; an API key does not inherit access to sibling projects.
+
+## Rotation and expiry
+
+Create the replacement key, update your application's secret store, verify the integration, then revoke the old key. Expired and revoked keys stop working. Save a new key's token when created: API-key listings expose metadata, not the token.
+
+[Remote MCP](/guides/agents) uses OAuth instead of API keys. Billing requires the account owner's dashboard session.

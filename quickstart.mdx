@@ -1,0 +1,42 @@
+---
+title: "Send your first email"
+description: "Verify a domain, create a sending key and check delivery."
+---
+## 1. Verify your sending domain
+
+Open **Domains** in the [dashboard](https://app.moonemail.co), add your domain and publish the DNS records shown there. Keep your existing mailbox MX records. Wait for the domain to show **Verified**.
+
+## 2. Create a sending key
+
+In **API keys**, create a **Sending access** key restricted to your verified domain. Save its token in your secret store as `MOONEMAIL_API_KEY`. The token is shown once.
+
+## 3. Send a test
+
+Replace the sender with an address on your verified domain and the recipient with an address you control. Set `MOONEMAIL_API_KEY` in your terminal's environment without putting it in shell history.
+
+```bash
+curl https://api.moonemail.co/emails \
+  -H "Authorization: Bearer $MOONEMAIL_API_KEY" \
+  -H "Content-Type: application/json" \
+  -H "Idempotency-Key: first-welcome-test-001" \
+  -d '{
+    "from": "Your app <hello@example.com>",
+    "to": ["you@example.net"],
+    "subject": "Your first Moonemail",
+    "html": "<p>Your email integration is ready.</p>"
+  }'
+```
+
+The response contains the message ID:
+
+```json
+{ "id": "019a0000-0000-7000-8000-000000000001" }
+```
+
+This means the request was accepted, not that the recipient received it. Check **Emails** in the dashboard, or use a credential with `emails:read` to retrieve its delivery events.
+
+Reuse the same idempotency key and payload for a retry. Use a new key for a new message. See [sending and retries](/guides/sending).
+
+## 4. Connect delivery events
+
+Add a [webhook](/guides/webhooks) for delivery, bounce and complaint events before using the integration in production. Account sending approval and safety limits still apply after domain verification or subscription.
