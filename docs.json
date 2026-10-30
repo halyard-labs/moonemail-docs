@@ -99,6 +99,17 @@
             ]
           },
           {
+            "group": "Receiving domains",
+            "openapi": "openapi.json",
+            "pages": [
+              "POST /domains/{id}/receiving",
+              "GET /domains/{id}/receiving",
+              "POST /domains/{id}/receiving/verify",
+              "POST /domains/{id}/receiving/disable",
+              "GET /receiving/domains"
+            ]
+          },
+          {
             "group": "Inboxes",
             "openapi": "openapi.json",
             "pages": [

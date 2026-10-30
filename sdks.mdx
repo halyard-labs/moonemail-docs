@@ -5,7 +5,8 @@ description: 'Open-source JavaScript, TypeScript, Python and Go clients generate
 
 Use the [official SDK repository](https://github.com/halyard-labs/moonemail-sdks)
 for server-side integrations. All three clients cover sending, receiving,
-inboxes, domains and health, webhooks, suppressions, API keys and permissions.
+inboxes, custom receiving domains and health, webhooks, suppressions, API keys and permissions.
+SDK 0.2.0 includes the custom receiving setup operations and `domain_id` / `local_part` inbox fields.
 
 The SDKs are MIT licensed and generated from the same public OpenAPI contract as
 this reference. Dashboard billing and OAuth consent are not API-key operations.
@@ -19,7 +20,7 @@ Go uses a versioned module tag. Pin versions and test upgrades.
 <Tabs>
 <Tab title="JavaScript / TypeScript">
 ```bash
-npm install moonemail@0.1.1
+npm install moonemail@0.2.0
 ```
 
 ```typescript
@@ -38,7 +39,7 @@ Node.js 22+. [TypeScript usage and errors](https://github.com/halyard-labs/moone
 </Tab>
 <Tab title="Python">
 ```bash
-pip install moonemail==0.1.1
+pip install moonemail==0.2.0
 ```
 
 ```python
@@ -58,7 +59,7 @@ Python 3.10+. [Python usage and errors](https://github.com/halyard-labs/moonemai
 </Tab>
 <Tab title="Go">
 ```bash
-go get github.com/halyard-labs/moonemail-sdks/go@v0.1.1
+go get github.com/halyard-labs/moonemail-sdks/go@v0.2.0
 ```
 
 ```go

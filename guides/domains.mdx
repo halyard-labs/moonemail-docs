@@ -6,7 +6,7 @@ Add a domain using the dashboard or `POST /domains`. Publish the returned DNS re
 
 Use the exact records returned for your domain. Keep verification and mail-related records DNS-only if your provider offers a web proxy. Do not replace existing human-mailbox MX records.
 
-The domain's receiving capability remains disabled: platform inboxes are created separately through `POST /inboxes`.
+Sending verification does not automatically enable receiving. For a dedicated subdomain, follow [custom receiving setup](/guides/receiving#use-your-own-domain), then create named inboxes through `POST /inboxes`. Generated platform inboxes remain available without a custom domain.
 
 ## Domain health
 

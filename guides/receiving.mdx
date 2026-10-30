@@ -4,9 +4,29 @@ description: "Create an application inbox and process incoming email."
 ---
 ## Create an inbox
 
-Use **Inboxes → Create inbox** in the dashboard, or `POST /inboxes` with a name and idempotency key. The name is a label; the API generates the receiving address. It does not let you choose a local part or bring a custom receiving domain.
+Use **Inboxes → Create inbox** in the dashboard, or `POST /inboxes` with a name and idempotency key. The name is a label. Without a custom domain, the API generates a receiving address. Sending and receiving start after account approval.
 
 Create a webhook subscribed to `email.received` and `email.receiving_quarantined`. Save and verify its signing secret before processing events.
+
+## Use your own domain
+
+Use a dedicated subdomain, such as `agents.example.com`. Leave your main email domain’s existing MX records in place.
+
+1. Add the subdomain under **Domains**, publish its sending DNS records and verify it.
+2. Open **Receiving → Set up receiving**, or call `POST /domains/{id}/receiving` with `domains:write`.
+3. Publish the returned ownership TXT and MX records. The subdomain must have only that receiving MX; these records do not replace the separate sending return-path MX.
+4. Click **Verify and enable**, or call `POST /domains/{id}/receiving/verify`.
+5. Create an inbox with a name, `domain_id` and `local_part`:
+
+```json
+{ "name": "Assistant", "domain_id": "YOUR_DOMAIN_ID", "local_part": "assistant" }
+```
+
+This reserves `assistant@agents.example.com`. Only registered inbox addresses are delivered; there is no catch-all inbox. Local parts use 1–64 lowercase letters, numbers, dots, underscores or hyphens, starting and ending with a letter or number. Addresses are never reassigned, including after domain deletion.
+
+`GET /receiving/domains` lists your configurations. `GET /domains/{id}/receiving` returns status and DNS records. Both require `domains:read`. All five receiving-domain operations are also available through the remote MCP server with the same scopes.
+
+DNS is rechecked periodically. A mismatch pauses receiving; temporary lookup errors do not extend the 24-hour verification lease. Restore DNS and verify again to resume. `POST /domains/{id}/receiving/disable` pauses every inbox on the domain without removing stored messages. Deleting the domain also stops receiving.
 
 ## Process an event
 
